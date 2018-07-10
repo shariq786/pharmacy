@@ -92,6 +92,7 @@
         </div>
       </li>
       <li class="nav-item">
+         <?php echo $this->session->userdata('first_name');?>&nbsp;<?php echo $this->session->userdata('last_name');?>&nbsp;&nbsp;&nbsp;&nbsp;
         <a  href="<?php echo base_url(); ?>adminLogout"><i class="fa fa-sign-out" aria-hidden="true" style="font-size:32px;color:red"></i></a>
       </li>
     </ul>
@@ -104,7 +105,7 @@
     <a href="index3.html" class="brand-link">
       <img src="<?php echo base_url() ?>assets/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
-      <span class="brand-text font-weight-light">AdminLTE 3</span>
+      <span class="brand-text font-weight-light">Pharmacy</span>
     </a>
 
     <!-- Sidebar -->
@@ -117,11 +118,10 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="<?php echo base_url('');?>" class="nav-link <?php if($this->uri->segment(1) == 'Dashbaord'){ echo 'active'; }; ?>">
+            <a href="<?php echo base_url('Dashboard');?>" class="nav-link <?php if($this->uri->segment(1) == 'Dashboard'){ echo 'active'; }; ?>">
               <i class="nav-icon fa fa-dashboard"></i>
               <p>
                 Dashboard
-                
               </p>
             </a>
             
@@ -129,17 +129,35 @@
 		   
           <li class="nav-item">
             <a href="<?php echo base_url(); ?>SubAdministartors" class="nav-link <?php if($this->uri->segment(1) == 'SubAdministartors'){ echo 'active'; }; ?>">
-              <i class="nav-icon fa fa-th"></i>
+              <i class="nav-icon fa fa-users"></i>
               <p>
                 Sub Administrators
               </p>
             </a>
           </li>
            <li class="nav-item">
-            <a href="<?php echo base_url(); ?>allUsers" class="nav-link <?php if($this->uri->segment(1) == 'allUsers'){ echo 'active'; }; ?>">
-              <i class="nav-icon fa fa-th"></i>
+            <a href="<?php echo base_url(); ?>Users" class="nav-link <?php if($this->uri->segment(1) == 'Users'){ echo 'active'; }; ?>">
+              <i class="nav-icon fa fa-users"></i>
               <p>
                 Users
+              </p>
+            </a>
+          </li>
+
+            <li class="nav-item">
+            <a href="<?php echo base_url(); ?>Departments" class="nav-link <?php if($this->uri->segment(1) == 'Departments'){ echo 'active'; }; ?>">
+              <i class="nav-icon fa fa-building"></i>
+              <p>
+                Departments
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="<?php echo base_url(); ?>Doctors" class="nav-link <?php if($this->uri->segment(1) == 'Doctors'){ echo 'active'; }; ?>">
+              <i class="nav-icon fa fa-users"></i>
+              <p>
+                Doctors
               </p>
             </a>
           </li>

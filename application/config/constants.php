@@ -54,8 +54,8 @@ define('EMAIL_FROM',                            'muhammadshariqali@gmail.com');	
 define('FROM_NAME',                             'PROTEGE GLOBAL');	// Your system name
 define('EMAIL_PASS',                            '');	// Your email password
 define('PROTOCOL',                             	'smtp');				// mail, sendmail, smtp
-define('SMTP_HOST',                 			'smtp.gmail.com');		// your smtp host e.g. smtp.gmail.com
-define('SMTP_PORT',                             '587');					// your smtp port e.g. 25, 587
+define('SMTP_HOST',                 			'smtp.googlemail.com');		// your smtp host e.g. smtp.gmail.com
+define('SMTP_PORT',                             '25');					// your smtp port e.g. 25, 587
 define('SMTP_USER',                             'shariqa2zcreatorz@gmail.com');		// your smtp user
 define('SMTP_PASS',                             'shariq!!!');	// your smtp password
 define('MAIL_PATH',                             '/usr/sbin/sendmail');

@@ -10,7 +10,6 @@
         <div class="row mb-2">
           <div class="col-sm-6">
             <h1 class="m-0 text-dark">Dashboard</h1>
-			       <?php print_r($this->session->all_userdata()); ?>
           </div><!-- /.col -->
           <div class="col-sm-6">
             

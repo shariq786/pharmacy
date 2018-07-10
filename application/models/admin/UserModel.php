@@ -1,6 +1,6 @@
 <?php if(!defined('BASEPATH')) exit('No direct script access allowed');
 
-class SubAdminModel extends CI_Model
+class UserModel extends CI_Model
 {
    
 	 function checkEmailExist($email)
@@ -20,7 +20,7 @@ class SubAdminModel extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('users');
-        $this->db->where('users.role_id',1);
+        $this->db->where('users.role_id',2);
         $query = $this->db->get();
 		return $query->result();
     }
@@ -38,6 +38,7 @@ class SubAdminModel extends CI_Model
 					'email'  => $this->input->post('email'), 
 					'first_name'  => $this->input->post('first_name'), 
 					'last_name' => $this->input->post('last_name'), 
+					'role_id' => 2, 
 				);
 				
 		

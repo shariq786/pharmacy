@@ -18,7 +18,9 @@
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
-<body class="hold-transition login-page">
+<body class="hold-transition login-page" style="background:url('<?php echo base_url();?>assets/images/pharmacy.jpg');background-repeat: no-repeat;
+    background-size: cover;
+">
 <div class="login-box">
   <div class="login-logo">
     <a href="#"><b>Admin Pharmacy</b></a>
@@ -75,7 +77,7 @@
 		
 		
 
-      <form action="<?php echo base_url() ?>user/createPasswordUser" method="post">
+      <form action="<?php echo base_url() ?>createPasswordUser" method="post">
         <div class="form-group has-feedback">
           <input type="email" name="email" class="form-control" readonly value="<?php echo $email; ?>" placeholder="Email">
 		  <input type="hidden" name="activation_code"  value="<?php echo $activation_code; ?>" required />

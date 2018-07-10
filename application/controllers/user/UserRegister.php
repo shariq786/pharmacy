@@ -20,7 +20,12 @@ class UserRegister extends CI_Controller {
         }
         else
         {
-            redirect('userDashboard');
+            $role_id = $this->session->userdata('role_id');
+            if($role_id == '1'){
+                redirect('admin');
+            }else{
+                 redirect('userDashboard');
+            }
 			
         }
 	}

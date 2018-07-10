@@ -19,7 +19,12 @@ class UserLogin extends CI_Controller {
         }
         else
         {
-            redirect('userDashboard');
+            $role_id = $this->session->userdata('role_id');
+            if($role_id == '1'){
+                redirect('admin');
+            }else{
+                 redirect('userDashboard');
+            }
 			
         }
 	}
@@ -84,7 +89,13 @@ class UserLogin extends CI_Controller {
      */
     public function forgotPassword()
     {
-        $this->load->view('user/forgotPassword');
+        $role_id = $this->session->userdata('role_id');
+        if($role_id == '1'){
+            redirect('admin');
+        }else{
+            $this->load->view('user/forgotPassword');
+        }
+        
     }
 	
 	

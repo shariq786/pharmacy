@@ -9,7 +9,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">User</h1>
+            <h1 class="m-0 text-dark">Doctors</h1>
       
           </div><!-- /.col -->
           <div class="col-sm-6">
@@ -30,7 +30,7 @@
       <div class="card">
             <div class="card-header">
               <h3 class="card-title">Data Table With Full Features</h3>
-        <div class="float-right"><a href="javascript:void(0);" class="btn btn-primary" data-toggle="modal" data-target="#Modal_UserAdd"><span class="fa fa-plus"></span> Add New</a></div>
+        <div class="float-right"><a href="javascript:void(0);" class="btn btn-primary" data-toggle="modal" data-target="#Modal_DepartmentAdd"><span class="fa fa-plus"></span> Add New</a></div>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -40,13 +40,23 @@
                 <table class="table table-striped" id="mydata">
                   <thead>
                     <tr>
+                      <th>Picture</th>
                       <th>First Name</th>
                       <th>Last Name</th>
+                      <th>Department</th>
                       <th>Email</th>
+                      <th>Contact</th>
+                      <th>Address</th>
+                      <th>Sex</th>
+                      <th>Blood Group</th>
+                      <th>Date of Birth</th>
+                      <th>User Role</th>
+                      <th>Create Date</th>
+                      <th>Status</th>
                       <th style="text-align: right;">Actions</th>
                     </tr>
                   </thead>
-                  <tbody id="show_userdata">
+                  <tbody id="show_doctordata">
                      
                   </tbody>
                 </table>
@@ -58,12 +68,12 @@
     
     
     <!-- MODAL ADD -->
-            <form id="adduserform">
-            <div class="modal fade" id="Modal_UserAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <form id="adddepartmentform">
+            <div class="modal fade" id="Modal_DepartmentAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                   <h5 class="modal-title" id="exampleModalLabel">Add New User <br/><span id="error"></span></h5>
+                   <h5 class="modal-title" id="exampleModalLabel">Add New Department <br/><span id="error"></span></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
@@ -72,21 +82,24 @@
 
                   <div class="modal-body">
                         <div class="form-group row">
-                            <label class="col-md-2 col-form-label">Email</label>
+                            <label class="col-md-2 col-form-label">Name</label>
                             <div class="col-md-10">
-                              <input type="text" name="email" id="email" class="form-control" placeholder="Email" >
+                              <input type="text" name="name" class="form-control" placeholder="Department Name" >
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-2 col-form-label">First Name</label>
+                            <label class="col-md-2 col-form-label">Description</label>
                             <div class="col-md-10">
-                              <input type="text" name="first_name" id="first_name" class="form-control" placeholder="First Name">
+                              <input type="text" name="description" class="form-control" placeholder="Department description">
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label class="col-md-2 col-form-label">Last Name</label>
-                            <div class="col-md-10">
-                              <input type="text" name="last_name" id="last_name" class="form-control" placeholder="Last Name">
+                         <div class="form-group row">
+                            <label class="col-sm-3">Status</label>
+                            <div class="col-xs-9"> 
+                                <div class="form-check">
+                                    <label class="radio-inline"><input type="radio" name="status_id" value="2" checked="">Active</label>
+                                    <label class="radio-inline"><input type="radio" name="status_id" value="3">Inactive</label>
+                                </div>
                             </div>
                         </div>
                   </div>
@@ -111,7 +124,7 @@
  
         <!-- MODAL EDIT -->
         <form>
-            <div class="modal fade" id="Modal_UserEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="Modal_DepartmentEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -123,27 +136,30 @@
                   <div class="modal-body">
                        <input type="hidden" name="id_edit" id="id_edit" class="form-control" readonly>
                         <div class="form-group row">
-                            <label class="col-md-2 col-form-label">Email</label>
+                            <label class="col-md-2 col-form-label">Name</label>
                             <div class="col-md-10">
-                              <input type="text" name="email_edit" id="email_edit" class="form-control" placeholder="Email" readonly>
+                              <input type="text" name="name_edit" class="form-control" placeholder="Department Name" >
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-2 col-form-label">First Name</label>
+                            <label class="col-md-2 col-form-label">Description</label>
                             <div class="col-md-10">
-                              <input type="text" name="first_name_edit" id="first_name_edit" class="form-control" placeholder="First Name">
+                              <input type="text" name="description_edit" class="form-control" placeholder="Department description">
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label class="col-md-2 col-form-label">Last Name</label>
-                            <div class="col-md-10">
-                              <input type="text" name="last_name_edit" id="last_name_edit" class="form-control" placeholder="Last Name">
+                         <div class="form-group row">
+                            <label class="col-sm-3">Status</label>
+                            <div class="col-xs-9"> 
+                                <div class="form-check">
+                                    <label class="radio-inline"><input type="radio" name="status_id_edit" value="2" checked>Active</label>
+                                    <label class="radio-inline"><input type="radio" name="status_id_edit" value="3">Inactive</label>
+                                </div>
                             </div>
                         </div>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" type="submit" id="btn_userupdate" class="btn btn-primary">Update</button>
+                    <button type="button" type="submit" id="btn_departmentupdate" class="btn btn-primary">Update</button>
                   </div>
                 </div>
               </div>
@@ -153,11 +169,11 @@
  
         <!--MODAL DELETE-->
          <form>
-            <div class="modal fade" id="Modal_UserDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="Modal_DepartmentDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Delete User</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Delete Department</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
@@ -168,7 +184,7 @@
                   <div class="modal-footer">
                     <input type="hidden" name="id" id="id" class="form-control">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                    <button type="button" type="submit" id="btn_userdelete" class="btn btn-primary">Yes</button>
+                    <button type="button" type="submit" id="btn_departmentdelete" class="btn btn-primary">Yes</button>
                   </div>
                 </div>
               </div>
@@ -194,5 +210,22 @@
     
     <!-- /.content -->
   </div>
- 
+ <Script>
+   function getCheckedValue(radioObj) {
+  if(!radioObj)
+    return "";
+  var radioLength = radioObj.length;
+  if(radioLength == undefined)
+    if(radioObj.checked)
+      return radioObj.value;
+    else
+      return "";
+  for(var i = 0; i < radioLength; i++) {
+    if(radioObj[i].checked) {
+      return radioObj[i].value;
+    }
+  }
+  return "";
+}
+ </Script>
   

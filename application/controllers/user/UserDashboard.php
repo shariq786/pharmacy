@@ -20,11 +20,15 @@ class UserDashboard extends CI_Controller {
         }
         else
         {
-          	$this->load->view('user/includes/header');
-			$this->load->view('user/includes/nav');
-			$this->load->view('user/dashboard');
-			$this->load->view('user/includes/footer');
-			
+        	$role_id = $this->session->userdata('role_id');
+        	if($role_id == '1'){
+				redirect('admin');
+        	}else{
+				$this->load->view('user/includes/header');
+				$this->load->view('user/includes/nav');
+				$this->load->view('user/dashboard');
+				$this->load->view('user/includes/footer');
+        	}
         }
 	}
 
@@ -156,8 +160,14 @@ class UserDashboard extends CI_Controller {
 	}
 	public function logout()
 	{
-		session_destroy();
-		redirect('');
+		$role_id = $this->session->userdata('role_id');
+        if($role_id == '1'){
+            redirect('admin');
+        }else{
+             
+			session_destroy();
+			redirect('');
+        }
 	}
 	
 

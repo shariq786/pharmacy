@@ -96,16 +96,6 @@
                   </div>
                 </div>
               </div>
-=======
-                  
-                </tr>
-                </thead>
-                <tbody>
-                
-				        </tbody>
-                
-              </table>
->>>>>>> 932aed8172f0f18c2d30b8564fdd7a95270e76f3
             </div>
             </form>
         <!--END MODAL ADD-->
@@ -166,7 +156,7 @@
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Delete Product</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Delete Subadmin</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>

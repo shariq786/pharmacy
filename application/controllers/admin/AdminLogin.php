@@ -7,6 +7,7 @@ class AdminLogin extends CI_Controller {
     {
         parent::__construct();
 		$this->load->model('admin/LoginModel','LoginModel');
+         $this->load->library("phpmailer_library");
 		
     }
 
@@ -145,7 +146,35 @@ class AdminLogin extends CI_Controller {
                         $data1["message"] = "Reset Your Password";
                     }
 
-                    $sendStatus = resetPasswordEmail($data1);
+                        $mail = $this->phpmailer_library->load();
+                        //Server settings
+                        $mail->SMTPDebug =0;                                 // Enable verbose debug output
+                        $mail->SMTPOptions = array(
+                            'ssl' => array(
+                                'verify_peer' => false,
+                                'verify_peer_name' => false,
+                                'allow_self_signed' => true
+                            )
+                        );
+                        $mail->isSMTP();    
+                                                          // Set mailer to use SMTP
+                        $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
+                        $mail->isSMTP();
+                        $mail->Port = 25;
+                        $mail->SMTPAuth = true;
+                        $mail->SMTPSecure = 'tls';                            // Enable SMTP authentication
+                        $mail->Username = 'shariqa2zcreatorz@gmail.com';                 // SMTP username
+                        $mail->Password = 'shariq!!!';                                  // TCP port to connect to
+                        //Recipients
+                        $mail->setFrom('info@protegeglobal.com', 'Protege Global');
+                        $mail->addAddress($userInfo[0]->email, $userInfo[0]->first_name);
+                        $mail->isHTML(true);                                  // Set email format to HTML
+                        $mail->Subject = 'Admin Reset Password';
+                        $mail->Body = $this->load->view('email/resetPassword.php',$data1,TRUE);   
+
+                        $sendStatus =$mail->send();
+
+                    //$sendStatus = resetPasswordEmail($data1);
 					
 					
 					

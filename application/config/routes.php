@@ -64,7 +64,9 @@ $route['adminLogout'] 	 	 					 = 'admin/AdminLogin/logout';
 //	-- Sub administartors
 
 $route['SubAdministartors'] 	 	 				 = 'admin/AdminSubAdmin/subAdminListing';
-$route['allUsers'] 	 	 				 = 'admin/AdminDashboard/all_users';
+$route['Users'] 	 	 				 = 'admin/AdminUser/userListing';
+$route['Departments'] 	 	 				 = 'admin/AdminDepartment/departmentListing';
+$route['Doctors'] 	 	 				 = 'admin/AdminDoctor/doctorListing';
 
 
 // Email
@@ -74,6 +76,7 @@ $route['resetPasswordUser']						 = "admin/AdminLogin/resetPasswordUser";
 $route['resetPasswordConfirmUser/(:any)/(:any)'] = "admin/AdminLogin/resetPasswordConfirmUser/$1/$2";
 $route['createPasswordUser'] 					 = "admin/AdminLogin/createPasswordUser";
 
+// User
 $route['user'] 			 = 'user/UserLogin';
 $route['userLogin'] 	 = 'user/UserLogin/loginMe';
 $route['userRegister']   = 'user/UserRegister/registeredMe';
@@ -82,8 +85,9 @@ $route['userProfile']  = 'user/UserDashboard/profileView';
 $route['userProfileUpdate']  = 'user/UserDashboard/userProfileUpdate';
 $route['userLogout']     = 'user/UserDashboard/logout';
 
-$route['user/forgotPassword'] 	 					 = 'user/UserLogin/forgotPassword';
 
+// User Email
+$route['user/forgotPassword'] 	 					 = 'user/UserLogin/forgotPassword';
 $route['user/resetPasswordUser']						 = "user/UserLogin/resetPasswordUser";
 $route['user/resetPasswordConfirmUser/(:any)/(:any)'] = "user/UserLogin/resetPasswordConfirmUser/$1/$2";
 $route['user/createPasswordUser'] 					 = "user/UserLogin/createPasswordUser";
