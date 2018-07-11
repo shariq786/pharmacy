@@ -49,6 +49,7 @@
 <!-- datepicker -->
 <script src="<?php echo base_url() ?>assets/plugins/datepicker/bootstrap-datepicker.js"></script>
 <!-- Bootstrap WYSIHTML5 -->
+<script src="<?php echo base_url() ?>assets/ckeditor/ckeditor.js"></script>
 <script src="<?php echo base_url() ?>assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
 <!-- Slimscroll -->
 <script src="<?php echo base_url() ?>assets/plugins/slimScroll/jquery.slimscroll.min.js"></script>
@@ -58,6 +59,7 @@
 <script src="<?php echo base_url() ?>assets/dist/js/adminlte.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="<?php echo base_url() ?>assets/dist/js/pages/dashboard.js"></script>
+
  <script>
 	
 		// $(window).on('load', function() {
@@ -545,7 +547,7 @@
                     var i;
                     for(i=0; i<data.length; i++){
                         html += '<tr>'+
-                                '<td><img src="assets/images/'+data[i].avatar+'" alt="doctor" width="100" height="100" /></td>'+
+                                '<td><img src="<?php echo base_url();?>assets/images/doctors/'+data[i].avatar+'" alt="Doctor Image" width="100" height="100" /></td>'+
                                 '<td>'+data[i].first_name+'</td>'+
                                 '<td>'+data[i].last_name+'</td>'+
                                 '<td>'+data[i].department_name+'</td>'+
@@ -553,13 +555,9 @@
                                 '<td>'+data[i].contact+'</td>'+
                                 
                                 '</td>'+
-                                '<td>'+data[i].address+'</td>'+
-                                '<td>'+data[i].gender+'</td>'+
-                                '<td>'+data[i].blood_group+'</td>'+
-                                '<td>'+data[i].dob+'</td>'+
-                                '<td>Doctor</td>'+
-                                '<td>'+data[i].created_date+'</td>'+
-                                '<td>'+data[i].status_name+'</td>'+
+                                '<td>'+data[i].clinic_name+'</td>'+ 
+                                '<td>'+data[i].address+'</td>'+ 
+                                '<td>'+data[i].visit_fee+'</td>'+ 
                                 
                                 '<td class="center">'+
                                     '<a href="javascript:void(0);" class="btn btn-info btn-sm item_edit" data-id="'+data[i].id+'" data-name="'+data[i].name+'" data-description="'+data[i].description+'" data-status_id="'+data[i].status_id+'">Edit</a>'+' '+
@@ -574,6 +572,71 @@
  
             });
         }
+        $('#adddoctorform').validate({
+                rules: {
+                    first_name: {
+                      required: true
+                    },
+                    last_name: {
+                      required: true
+                    },
+                    email: {
+                      required: true,
+                      email : true
+                    },
+                    department_id: {
+                      required: true
+                    },
+                    address: {
+                      required: true
+                    },
+                    contact: {
+                      required: true
+                    },
+                    clinic_name: {
+                      required: true
+                    },
+                    visit_fee: {
+                      required: true
+                    },
+                    avatar: {
+                      required: true
+                    }
+                    
+                  },
+                submitHandler: function(form) {
+
+                       var formData = new FormData( $("#adddoctorform")[0]);
+                       formData.append('avatar', $("#doctor_image")[0].files[0])
+
+                        $.ajax({
+                            url : "<?php echo base_url('admin/AdminDoctor/save_doctor')?>",  // Controller URL
+                            type : 'POST',
+                            data : formData,
+                            async : false,
+                            cache : false,
+                            contentType : false,
+                            processData : false,
+                            success : function(php_script_response) {
+                                $("#error").empty();
+                                $('[name="first_name"]').val("");
+                                $('[name="last_name"]').val("");
+                                $('[name="email"]').val("");
+                                $('[name="department_id"]').val("");
+                                $('[name="address"]').val("");
+                                $('[name="contact"]').val("");
+                                $('[name="clinic_name"]').val("");
+                                $('[name="visit_fee"]').val("");
+                                $('[name="avatar"]').val("");
+                                $('#Modal_DoctorAdd').modal('hide');
+                                show_doctors();
+                            }
+                        });            
+                
+                    return false;
+                },
+                // other options
+            });
 
 
 
@@ -594,6 +657,40 @@
 	
 	
  
+</script>
+
+<script>
+  $(function () {
+    // Replace the <textarea id="editor1"> with a CKEditor
+    // instance, using default configuration.
+    // ClassicEditor
+    //   .create(document.querySelector('#address'))
+    //   .then(function (editor) {
+    //    console.log(editor)
+    //   })
+    //   .catch(function (error) {
+    //     console.error(error)
+    //   })
+
+   //  $(function () {
+ 
+ 
+   //    CKEDITOR.replace( 'editor1',
+   //    {
+   //     removeButtons: 'Source,Table,About,Image'
+   //    });
+  
+   // })
+
+
+ 
+    // bootstrap WYSIHTML5 - text editor
+
+    // $('#address').wysihtml5({
+    //   toolbar: { fa: true }
+    // })
+
+  })
 </script>
 
 

@@ -32,9 +32,11 @@ class AdminDoctor extends CI_Controller {
 	
 	public function doctorListing()
 	{
+		$data["departments"] = $this->DoctorModel->getDepartments();
+		$data["bloodgroups"] = array('A+','A-','B+','B-','O+','O-','AB+','AB-');
 		$this->load->view('admin/includes/header');
 		$this->load->view('admin/includes/nav');
-		$this->load->view('admin/doctor/view');
+		$this->load->view('admin/doctor/view',$data);
 		$this->load->view('admin/includes/footer');
 	}
 	
@@ -48,19 +50,32 @@ class AdminDoctor extends CI_Controller {
 	}
 
 	
-	function save(){
-		
-        $data=$this->DoctorModel->save_user();
-		echo json_encode($data);
-    }
+	function save_doctor(){
+
+	     $config['upload_path'] ='assets/images/doctors/'; 
+	     $config['allowed_types']    = 'gif|jpg|png';
+	     $config['max_size']         = '100';
+	     $config['max_width']        = '1024';
+	     $config['max_height']       ='768';   
+	     $this->load->library('upload', $config);
+	     
+	     if (!$this->upload->do_upload()) {
+	      $error = array('error' => $this->upload->display_errors());
+	     } else {
+	      		$_POST["avatar"] = time().'_'.$this->upload->data('file_name');
+	        	$data=$this->DoctorModel->save_doctor();
+	     		echo json_encode($data);
+   		 }
+	 }
+	    
 	
-	function update(){
-        $data=$this->DoctorModel->update_user();
+	function update_doctor(){
+        $data=$this->DoctorModel->update_doctor();
         echo json_encode($data);
     }
 	
-	function delete(){
-        $data=$this->DoctorModel->delete_user();
+	function delete_doctor(){
+        $data=$this->DoctorModel->delete_doctor();
         echo json_encode($data);
     }
 	

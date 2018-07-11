@@ -3,12 +3,12 @@
 class DoctorModel extends CI_Model
 {
    
-	 function checkDepartmentExist($name)
+	 function checkDoctorExist($email)
     {
         $this->db->select('id');
 
-        $this->db->where('name', $name);
-        $query = $this->db->get('departments');
+        $this->db->where('email', $email);
+        $query = $this->db->get('doctors');
 
         if ($query->num_rows() > 0){
             return true;
@@ -16,33 +16,48 @@ class DoctorModel extends CI_Model
             return false;
         }
     }
+
+    function getDepartments()
+    {
+        $this->db->select('departments.*');
+        $this->db->from('departments');
+        $query = $this->db->get();
+		return $query->result();
+    }
 	
 	function viewRecords()
     {
-        $this->db->select('doctors.*,status.name as status_name,departments.name as department_name');
+        $this->db->select('doctors.*,departments.name as department_name');
         $this->db->join('departments','departments.id=doctors.department_id');
-        $this->db->join('status','status.id=doctors.status_id');
         $this->db->from('doctors');
         $query = $this->db->get();
 		return $query->result();
     }
 	
 	
-	function save_department(){
+	function save_doctor(){
 		
 		
 		
-		$exists = $this->checkDepartmentExist($this->input->post('name'));
+		$exists = $this->checkDoctorExist($_POST["email"]);
 		if($exists){
-			return "name_exist";
+			return "email_exist";
 		}else{
 			$data = array(
-					'name'  => $this->input->post('name'), 
-					'description'  => $this->input->post('description'), 
-					'status_id' => $this->input->post('status_id'), 
+					'first_name'  =>$_POST["first_name"], 
+					'last_name'  => $_POST["last_name"], 
+					'email' => $_POST["email"], 
+					'department_id'  => $_POST["department_id"], 
+					'address'  => $_POST["address"], 
+					'contact' =>$_POST["contact"], 
+					'clinic_name'  => $_POST["clinic_name"], 
+					'visit_fee'  => $_POST["visit_fee"],
+					'avatar'  => $_POST["avatar"],  
 				);
+
+
 		
-			if($this->db->insert('departments',$data)){
+			if($this->db->insert('doctors',$data)){
 				return 'true';
 			} else {
 				return 'false';
