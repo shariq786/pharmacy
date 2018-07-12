@@ -69,6 +69,7 @@ $route['Departments'] 	 	 				 = 'admin/AdminDepartment/departmentListing';
 $route['Doctors'] 	 	 				 = 'admin/AdminDoctor/doctorListing';
 $route['Labs'] 	 	 				 = 'admin/AdminLab/labListing';
 $route['Tests'] 	 	 				 = 'admin/AdminTest/testListing';
+$route['Categories'] 	 	 				 = 'admin/AdminCategory/categoryListing';
 
 $route['Products'] 	 	 				 = 'admin/AdminProduct/productListing';
 

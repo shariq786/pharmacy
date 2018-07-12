@@ -73,6 +73,7 @@
 <script src="<?php echo base_url() ?>assets/js/adminjs/doctors.js"></script>
 <script src="<?php echo base_url() ?>assets/js/adminjs/labs.js"></script>
 <script src="<?php echo base_url() ?>assets/js/adminjs/tests.js"></script>
+<script src="<?php echo base_url() ?>assets/js/adminjs/categories.js"></script>
 
 
 
