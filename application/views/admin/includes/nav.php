@@ -161,6 +161,22 @@
               </p>
             </a>
           </li>
+           <li class="nav-item">
+            <a href="<?php echo base_url(); ?>Labs" class="nav-link <?php if($this->uri->segment(1) == 'Labs'){ echo 'active'; }; ?>">
+              <i class="nav-icon fa fa-building"></i>
+              <p>
+                Laboratory
+              </p>
+            </a>
+          </li>
+           <li class="nav-item">
+            <a href="<?php echo base_url(); ?>Tests" class="nav-link <?php if($this->uri->segment(1) == 'Tests'){ echo 'active'; }; ?>">
+              <i class="nav-icon fa fa-building"></i>
+              <p>
+                Tests
+              </p>
+            </a>
+          </li>
           
         
         </ul>

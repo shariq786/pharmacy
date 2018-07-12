@@ -1,14 +1,14 @@
 <?php if(!defined('BASEPATH')) exit('No direct script access allowed');
 
-class DepartmentModel extends CI_Model
+class LabModel extends CI_Model
 {
    
-	 function checkDepartmentExist($name)
+	 function checkLabExist($name)
     {
         $this->db->select('id');
 
         $this->db->where('name', $name);
-        $query = $this->db->get('departments');
+        $query = $this->db->get('labs');
 
         if ($query->num_rows() > 0){
             return true;
@@ -19,27 +19,29 @@ class DepartmentModel extends CI_Model
 	
 	function viewRecords()
     {
-        $this->db->select('departments.*');
-        $this->db->from('departments');
+        $this->db->select('labs.*');
+        $this->db->from('labs');
         $query = $this->db->get();
 		return $query->result();
     }
 	
 	
-	function save_department(){
+	function save_lab(){
 		
 		
 		
-		$exists = $this->checkDepartmentExist($this->input->post('name'));
+		$exists = $this->checkLabExist($this->input->post('name'));
 		if($exists){
 			return "name_exist";
 		}else{
 			$data = array(
 					'name'  => $this->input->post('name'), 
-					'description'  => $this->input->post('description'), 
+					'address'  => $this->input->post('address'), 
+					'contact'  => $this->input->post('contact'), 
+					'sec_contact'  => $this->input->post('sec_contact'), 
 				);
 		
-			if($this->db->insert('departments',$data)){
+			if($this->db->insert('labs',$data)){
 				return 'true';
 			} else {
 				return 'false';
@@ -53,22 +55,26 @@ class DepartmentModel extends CI_Model
 	}
 	
 	
-	function update_department(){
+	function update_lab(){
 		$id  = $this->input->post('id'); 
 		$name  = $this->input->post('name'); 
-		$description  = $this->input->post('description'); 
+		$address  = $this->input->post('address'); 
+		$contact  = $this->input->post('contact'); 
+		$sec_contact  = $this->input->post('sec_contact'); 
  
         $this->db->set('name', $name);
-        $this->db->set('description', $description);
+        $this->db->set('address', $address);
+        $this->db->set('contact', $contact);
+        $this->db->set('sec_contact', $sec_contact);
         $this->db->where('id', $id);
-        $result=$this->db->update('departments');
+        $result=$this->db->update('labs');
         return $result;
     }
 	
-	function delete_department(){
+	function delete_lab(){
         $id=$this->input->post('id');
         $this->db->where('id', $id);
-        $result=$this->db->delete('departments');
+        $result=$this->db->delete('labs');
         return $result;
     }
    

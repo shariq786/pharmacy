@@ -52,26 +52,52 @@ class AdminDoctor extends CI_Controller {
 	
 	function save_doctor(){
 
-	     $config['upload_path'] ='assets/images/doctors/'; 
-	     $config['allowed_types']    = 'gif|jpg|png';
-	     $config['max_size']         = '100';
-	     $config['max_width']        = '1024';
-	     $config['max_height']       ='768';   
-	     $this->load->library('upload', $config);
-	     
-	     if (!$this->upload->do_upload()) {
-	      $error = array('error' => $this->upload->display_errors());
-	     } else {
-	      		$_POST["avatar"] = time().'_'.$this->upload->data('file_name');
+		if(isset($_FILES['avatar']['name']) && !empty($_FILES['avatar']['name'])){
+             $uploadPath = 'uploads/doctors/';
+             $config['upload_path'] = $uploadPath;
+             $config['allowed_types']    = 'jpg|png';
+		     $config['max_size']         = 2048;
+		     $config['max_width']        = 5000;
+		     $config['max_height']       = 5000;
+		     $config['file_ext_tolower'] = true;
+		     $config['encrypt_name']     = true;   
+            
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+            if($this->upload->do_upload('avatar')){
+            	$fileData = $this->upload->data();
+            	$_POST['avatar'] =$fileData['file_name'];
 	        	$data=$this->DoctorModel->save_doctor();
 	     		echo json_encode($data);
-   		 }
+            }
+        }
 	 }
 	    
 	
 	function update_doctor(){
-        $data=$this->DoctorModel->update_doctor();
-        echo json_encode($data);
+		if(isset($_FILES['avatar_edit']['name']) && !empty($_FILES['avatar_edit']['name'])){
+             $uploadPath = 'uploads/doctors/';
+             $config['upload_path'] = $uploadPath;
+             $config['allowed_types']    = 'jpg|png';
+		     $config['max_size']         = 2048;
+		     $config['max_width']        = 5000;
+		     $config['max_height']       = 5000;
+		     $config['file_ext_tolower'] = true;
+		     $config['encrypt_name']     = true;   
+            
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+            if($this->upload->do_upload('avatar_edit')){
+            	$fileData = $this->upload->data();
+            	$_POST['avatar_edit'] =$fileData['file_name'];
+	        	$data=$this->DoctorModel->update_doctor();
+        		echo json_encode($data);
+            }
+        }else{
+        	$data=$this->DoctorModel->update_doctor();
+        	echo json_encode($data);
+        }
+        
     }
 	
 	function delete_doctor(){

@@ -411,9 +411,8 @@
                                 html += '<tr>'+
                                         '<td>'+data[i].name+'</td>'+
                                         '<td>'+data[i].description+'</td>'+
-                                        '<td>'+data[i].status_name+'</td>'+
                                         '<td style="text-align:right;">'+
-                                            '<a href="javascript:void(0);" class="btn btn-info btn-sm item_edit" data-id="'+data[i].id+'" data-name="'+data[i].name+'" data-description="'+data[i].description+'" data-status_id="'+data[i].status_id+'">Edit</a>'+' '+
+                                            '<a href="javascript:void(0);" class="btn btn-info btn-sm item_edit" data-id="'+data[i].id+'" data-name="'+data[i].name+'" data-description="'+data[i].description+'">Edit</a>'+' '+
                                             '<a href="javascript:void(0);" class="btn btn-danger btn-sm item_delete" data-id="'+data[i].id+'">Delete</a>'+
                                         '</td>'+
                                         '</tr>';
@@ -443,12 +442,11 @@
                 submitHandler: function(form) {
                     var name = $('[name="name"]').val();
                     var description = $('[name="description"]').val();
-                    var status_id = $("input[name='status_id']:checked").val();
                     $.ajax({
                         type : "POST",
                         url  : "<?php echo base_url('admin/AdminDepartment/save_department')?>",
                         dataType : "JSON",
-                        data : {name:name , description:description, status_id:status_id},
+                        data : {name:name , description:description},
                         success: function(data){
                             if(data == 'name_exist'){
                                 $("#error").html('<label class="error" >Department name already exist!</label>');
@@ -459,7 +457,6 @@
                                 $("#error").empty();
                                 $('[name="name"]').val("");
                                 $('[name="description"]').val("");
-                                $('[name="status_id"]').val("");
                                 $('#Modal_DepartmentAdd').modal('hide');
                                 show_departments();
                             }
@@ -481,12 +478,9 @@
             var id      = $(this).data('id');
             var name = $(this).data('name');
             var description = $(this).data('description');
-            var status_id        = $(this).data('status_id');
             $('[name="id_edit"]').val(id);
             $('[name="name_edit"]').val(name);
             $('[name="description_edit"]').val(description);
-            $('[name="status_id_edit"]').removeAttr("checked");
-            $('[name="status_id_edit"]').filter("[value="+status_id+"]").prop("checked",true);
             $('#Modal_DepartmentEdit').modal('show');
 
         });
@@ -496,12 +490,11 @@
             var id  = $('[name="id_edit"]').val();
             var name = $('[name="name_edit"]').val();
             var description = $('[name="description_edit"]').val();
-            var status_id = $('input[name="status_id_edit"]:checked').val();
             $.ajax({
                 type : "POST",
                 url  : "<?php echo base_url('admin/AdminDepartment/update_department')?>",
                 dataType : "JSON",
-                data : {id:id, name:name , description:description, status_id:status_id},
+                data : {id:id, name:name , description:description},
                 success: function(data){
                     $('#Modal_DepartmentEdit').modal('hide');
                     show_departments();
@@ -547,7 +540,7 @@
                     var i;
                     for(i=0; i<data.length; i++){
                         html += '<tr>'+
-                                '<td><img src="<?php echo base_url();?>assets/images/doctors/'+data[i].avatar+'" alt="Doctor Image" width="100" height="100" /></td>'+
+                                '<td><img src="<?php echo base_url();?>uploads/doctors/'+data[i].avatar+'" alt="Doctor Image" width="100" height="100" /></td>'+
                                 '<td>'+data[i].first_name+'</td>'+
                                 '<td>'+data[i].last_name+'</td>'+
                                 '<td>'+data[i].department_name+'</td>'+
@@ -560,7 +553,7 @@
                                 '<td>'+data[i].visit_fee+'</td>'+ 
                                 
                                 '<td class="center">'+
-                                    '<a href="javascript:void(0);" class="btn btn-info btn-sm item_edit" data-id="'+data[i].id+'" data-name="'+data[i].name+'" data-description="'+data[i].description+'" data-status_id="'+data[i].status_id+'">Edit</a>'+' '+
+                                    '<a href="javascript:void(0);" class="btn btn-info btn-sm item_edit" data-id="'+data[i].id+'" data-first_name="'+data[i].first_name+'" data-last_name="'+data[i].last_name+'" data-department_id="'+data[i].department_id+'" data-email="'+data[i].email+'" data-contact="'+data[i].contact+'" data-clinic_name="'+data[i].clinic_name+'" data-address="'+data[i].address+'" data-visit_fee="'+data[i].visit_fee+'" data-avatar="'+data[i].avatar+'" >Edit</a>'+' '+
                                     '<a href="javascript:void(0);" class="btn btn-danger btn-sm item_delete" data-id="'+data[i].id+'">Delete</a>'+
                                 '</tr>';
                     }
@@ -617,19 +610,26 @@
                             cache : false,
                             contentType : false,
                             processData : false,
-                            success : function(php_script_response) {
-                                $("#error").empty();
-                                $('[name="first_name"]').val("");
-                                $('[name="last_name"]').val("");
-                                $('[name="email"]').val("");
-                                $('[name="department_id"]').val("");
-                                $('[name="address"]').val("");
-                                $('[name="contact"]').val("");
-                                $('[name="clinic_name"]').val("");
-                                $('[name="visit_fee"]').val("");
-                                $('[name="avatar"]').val("");
-                                $('#Modal_DoctorAdd').modal('hide');
-                                show_doctors();
+                            success : function(data) {
+                               if(data == 'email_exist'){
+                                    $("#error").html('<label class="error" >Email already exist!</label>');
+                                }
+                                else if(data == 'false'){
+                                    $("#error").html('<label class="error" >Error in adding!</label>');
+                                } else {
+                                    $("#error").empty();
+                                    $('[name="first_name"]').val("");
+                                    $('[name="last_name"]').val("");
+                                    $('[name="email"]').val("");
+                                    $('[name="department_id"]').val("");
+                                    $('[name="address"]').val("");
+                                    $('[name="contact"]').val("");
+                                    $('[name="clinic_name"]').val("");
+                                    $('[name="visit_fee"]').val("");
+                                    $('[name="avatar"]').val("");
+                                    $('#Modal_DoctorAdd').modal('hide');
+                                    show_doctors();
+                                }
                             }
                         });            
                 
@@ -637,6 +637,274 @@
                 },
                 // other options
             });
+        $('#show_doctordata').on('click','.item_edit',function(){
+           var id = $(this).data('id');
+            var first_name = $(this).data('first_name');
+            var last_name = $(this).data('last_name');
+            var email = $(this).data('email');
+            var department_id = $(this).data('department_id');
+            var address = $(this).data('address');
+            var contact = $(this).data('contact');
+            var clinic_name = $(this).data('clinic_name');
+            var visit_fee   = $(this).data('visit_fee');
+            var avatar = $(this).data('avatar');
+            $('[name="id_edit"]').val(id);
+            $('[name="first_name_edit"]').val(first_name);
+            $('[name="last_name_edit"]').val(last_name);
+            $('[name="email_edit"]').val(email);
+            $('[name="department_id_edit"]').val(department_id);
+            $('[name="address_edit"]').val(address);
+            $('[name="contact_edit"]').val(contact);
+            $('[name="clinic_name_edit"]').val(clinic_name);
+            $('[name="visit_fee_edit"]').val(visit_fee);
+            $("#doctor_image_view").attr("src","<?php echo base_url();?>uploads/doctors/" +avatar);
+            $('#Modal_DoctorEdit').modal('show');
+
+        });
+          $('#editdoctorform').validate({
+                rules: {
+                    first_name_edit: {
+                      required: true
+                    },
+                    last_name_edit: {
+                      required: true
+                    },
+                    email_edit: {
+                      required: true,
+                      email : true
+                    },
+                    department_id_edit: {
+                      required: true
+                    },
+                    address_edit: {
+                      required: true
+                    },
+                    contact_edit: {
+                      required: true
+                    },
+                    clinic_name_edit: {
+                      required: true
+                    },
+                    visit_fee_edit: {
+                      required: true
+                    }
+                    
+                  },
+                submitHandler: function(form) {
+
+                        var formData = new FormData( $("#editdoctorform")[0]);
+                        formData.append('avatar_edit', $("#doctor_image_new")[0].files[0])
+                        
+                        $.ajax({
+                            url : "<?php echo base_url('admin/AdminDoctor/update_doctor')?>",  
+                            type : 'POST',
+                            data : formData,
+                            async : false,
+                            cache : false,
+                            contentType : false,
+                            processData : false,
+                            success : function(data) {
+                               if(data == 'email_exist'){
+                                    $("#error").html('<label class="error" >Email already exist!</label>');
+                                }
+                                else if(data == 'false'){
+                                    $("#error").html('<label class="error" >Error in adding!</label>');
+                                } else {
+                                    $("#error").empty();
+                                    $('[name="id_edit"]').val("");
+                                    $('[name="first_name_edit"]').val("");
+                                    $('[name="last_name_edit"]').val("");
+                                    $('[name="email_edit"]').val("");
+                                    $('[name="department_id_edit"]').val("");
+                                    $('[name="address_edit"]').val("");
+                                    $('[name="contact_edit"]').val("");
+                                    $('[name="clinic_name_edit"]').val("");
+                                    $('[name="visit_fee_edit"]').val("");
+                                    $('[name="avatar_edit"]').val("");
+                                    $('#Modal_DoctorEdit').modal('hide');
+                                    show_doctors();
+                                }
+                            }
+                        });         
+                    return false;
+                },
+                // other options
+            });
+
+           $('#show_doctordata').on('click','.item_delete',function(){
+            var id = $(this).data('id');
+             
+            $('#Modal_DoctorDelete').modal('show');
+            $('[name="id"]').val(id);
+        });
+ 
+        //delete record to database
+         $('#btn_doctordelete').on('click',function(){
+                    var id = $('#id').val();
+                    $.ajax({
+                        type : "POST",
+                        url  : "<?php echo base_url('admin/AdminDoctor/delete_doctor')?>",
+                        dataType : "JSON",
+                        data : {id:id},
+                        success: function(data){
+                            $('[name="id"]').val("");
+                            $('#Modal_DoctorDelete').modal('hide');
+                            show_doctors();
+                        }
+                    });
+            return false;
+        });
+
+                show_labs();
+                 function show_labs(){
+                    $.ajax({
+                        type  : 'ajax',
+                        url   : '<?php echo base_url('admin/AdminLab/getLabData')?>',
+                        async : false,
+                        dataType : 'json',
+                        success : function(data){
+                            var html = '';
+                            var i;
+                            for(i=0; i<data.length; i++){
+                                html += '<tr>'+
+                                        '<td>'+data[i].name+'</td>'+
+                                        '<td>'+data[i].address+'</td>'+
+                                        '<td>'+data[i].contact+'</td>'+
+                                        '<td>'+data[i].sec_contact+'</td>'+
+                                        '<td style="text-align:right;">'+
+                                            '<a href="javascript:void(0);" class="btn btn-info btn-sm item_edit" data-id="'+data[i].id+'" data-name="'+data[i].name+'" data-address="'+data[i].address+'" data-contact="'+data[i].contact+'" data-sec_contact="'+data[i].sec_contact+'">Edit</a>'+' '+
+                                            '<a href="javascript:void(0);" class="btn btn-danger btn-sm item_delete" data-id="'+data[i].id+'">Delete</a>'+
+                                        '</td>'+
+                                        '</tr>';
+                            }
+                            $("#mydata").dataTable().fnDestroy();
+                            $('#show_labdata').html(html);
+                            $("#mydata").dataTable();
+                           
+                        }
+         
+                    });
+                }
+
+            
+            
+            
+            $('#addlabform').validate({
+                rules: {
+                    name: {
+                      required: true
+                    },
+                    address: {
+                      required: true
+                    },
+                    contact: {
+                      required: true
+                    },
+                    sec_contact: {
+                      required: true
+                    }
+                    
+                  },
+                submitHandler: function(form) {
+                    var name = $('[name="name"]').val();
+                    var address = $('[name="address"]').val();
+                    var contact = $('[name="contact"]').val();
+                    var sec_contact = $('[name="sec_contact"]').val();
+                    $.ajax({
+                        type : "POST",
+                        url  : "<?php echo base_url('admin/AdminLab/save_lab')?>",
+                        dataType : "JSON",
+                        data : {name:name , address:address, contact:contact,sec_contact:sec_contact},
+                        success: function(data){
+                            if(data == 'name_exist'){
+                                $("#error").html('<label class="error" >Lab name already exist!</label>');
+                            }
+                            else if(data == 'false'){
+                                $("#error").html('<label class="error" >Error in adding!</label>');
+                            } else {
+                                $("#error").empty();
+                                $('[name="name"]').val("");
+                                $('[name="description"]').val("");
+                                 $('[name="contact"]').val("");
+                                $('[name="sec_contact"]').val("");
+                                $('#Modal_LabAdd').modal('hide');
+                                show_labs();
+                            }
+                        }
+                    });
+                    return false;
+                },
+                // other options
+            });
+            
+            
+            
+            
+       // });
+ 
+        //get data for update record
+        $('#show_labdata').on('click','.item_edit',function(){
+            
+            var id      = $(this).data('id');
+            var name      = $(this).data('name');
+            var address      = $(this).data('address');
+            var contact      = $(this).data('contact');
+            var sec_contact      = $(this).data('sec_contact');
+          
+            $('[name="id_edit"]').val(id);
+            $('[name="name_edit"]').val(name);
+            $('[name="address_edit"]').val(address);
+            $('[name="contact_edit"]').val(contact);
+            $('[name="sec_contact_edit"]').val(sec_contact);
+            $('#Modal_LabEdit').modal('show');
+
+        });
+ 
+        //update record to database
+         $('#btn_labupdate').on('click',function(){
+            var id  = $('[name="id_edit"]').val();
+            var name = $('[name="name_edit"]').val();
+            var address = $('[name="address_edit"]').val();
+            var contact = $('[name="contact_edit"]').val();
+            var sec_contact = $('[name="sec_contact_edit"]').val();
+            $.ajax({
+                type : "POST",
+                url  : "<?php echo base_url('admin/AdminLab/update_lab')?>",
+                dataType : "JSON",
+                data : {name:name , address:address, contact:contact,sec_contact:sec_contact,id:id},
+                success: function(data){
+                    $('#Modal_LabEdit').modal('hide');
+                    show_labs();
+                }
+            });
+            return false;
+        });
+ 
+        //get data for delete record
+        $('#show_labdata').on('click','.item_delete',function(){
+            var id = $(this).data('id');
+             
+            $('#Modal_LabDelete').modal('show');
+            $('[name="id"]').val(id);
+        });
+ 
+        //delete record to database
+         $('#btn_labdelete').on('click',function(){
+                    var id = $('#id').val();
+                    $.ajax({
+                        type : "POST",
+                        url  : "<?php echo base_url('admin/AdminLab/delete_lab')?>",
+                        dataType : "JSON",
+                        data : {id:id},
+                        success: function(data){
+                            $('[name="id"]').val("");
+                            $('#Modal_LabDelete').modal('hide');
+                            show_labs();
+                        }
+                    });
+            return false;
+        });
+
 
 
 

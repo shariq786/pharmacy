@@ -69,7 +69,7 @@
               <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                   <h5 class="modal-title" id="exampleModalLabel">Add New Doctor <br/><span id="error"></span></h5>
+                   <h5 class="modal-title" id="exampleModalLabel">Add Doctor Information<br/><span id="error"></span></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
@@ -164,12 +164,12 @@
  
  
         <!-- MODAL EDIT -->
-        <form>
-            <div class="modal fade" id="Modal_DepartmentEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form id="editdoctorform" enctype="multipart/form-data" accept-charset="utf-8" name="edit_formname" method="post" action="">
+            <div class="modal fade" id="Modal_DoctorEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Doctor Information</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
@@ -234,10 +234,24 @@
                               <input type="number" name="visit_fee_edit" class="form-control" placeholder="Visit Fee" >
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label">Picture</label>
+                            <div class="col-md-10">
+                              <img src="" id="doctor_image_view" alt="doctor_image" width="200" height="200" />
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label">Select Picture</label>
+                            <div class="col-md-10">
+                              <input type="file" name="avatar_edit" id="doctor_image_new" class="form-control" placeholder="Visit Fee" >
+                            </div>
+                        </div>
+
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" type="submit" id="btn_departmentupdate" class="btn btn-primary">Update</button>
+                    <button type="submit" id="btn_doctorupdate" class="btn btn-primary">Update</button>
                   </div>
                 </div>
               </div>
@@ -247,11 +261,11 @@
  
         <!--MODAL DELETE-->
          <form>
-            <div class="modal fade" id="Modal_DepartmentDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="Modal_DoctorDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Delete Department</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Delete Doctor Information</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
@@ -262,7 +276,7 @@
                   <div class="modal-footer">
                     <input type="hidden" name="id" id="id" class="form-control">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                    <button type="button" type="submit" id="btn_departmentdelete" class="btn btn-primary">Yes</button>
+                    <button type="button" type="submit" id="btn_doctordelete" class="btn btn-primary">Yes</button>
                   </div>
                 </div>
               </div>
