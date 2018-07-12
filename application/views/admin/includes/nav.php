@@ -177,6 +177,15 @@
               </p>
             </a>
           </li>
+		  
+		  <li class="nav-item">
+            <a href="<?php echo base_url(); ?>Products" class="nav-link <?php if($this->uri->segment(1) == 'Products'){ echo 'active'; }; ?>">
+              <i class="nav-icon fa fa-building"></i>
+              <p>
+                Products
+              </p>
+            </a>
+          </li>
           
         
         </ul>
