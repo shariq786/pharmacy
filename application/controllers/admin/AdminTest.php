@@ -32,11 +32,20 @@ class AdminTest extends CI_Controller {
 	
 	public function testListing()
 	{
-		$data["labs"] = $this->TestModel->getLabs();
-		$this->load->view('admin/includes/header');
-		$this->load->view('admin/includes/nav');
-		$this->load->view('admin/test/view',$data);
-		$this->load->view('admin/includes/footer');
+		$isLoggedIn = $this->session->userdata('isLoggedIn');
+        
+        if(!isset($isLoggedIn) || $isLoggedIn != TRUE)
+        {
+			     redirect('admin');
+        }
+        else
+        {
+			$data["labs"] = $this->TestModel->getLabs();
+			$this->load->view('admin/includes/header');
+			$this->load->view('admin/includes/nav');
+			$this->load->view('admin/test/view',$data);
+			$this->load->view('admin/includes/footer');
+		}
 	}
 	
 	

@@ -32,12 +32,21 @@ class AdminDoctor extends CI_Controller {
 	
 	public function doctorListing()
 	{
-		$data["departments"] = $this->DoctorModel->getDepartments();
-		$data["bloodgroups"] = array('A+','A-','B+','B-','O+','O-','AB+','AB-');
-		$this->load->view('admin/includes/header');
-		$this->load->view('admin/includes/nav');
-		$this->load->view('admin/doctor/view',$data);
-		$this->load->view('admin/includes/footer');
+		$isLoggedIn = $this->session->userdata('isLoggedIn');
+        
+        if(!isset($isLoggedIn) || $isLoggedIn != TRUE)
+        {
+			     redirect('admin');
+        }
+        else
+        {
+			$data["departments"] = $this->DoctorModel->getDepartments();
+			$data["bloodgroups"] = array('A+','A-','B+','B-','O+','O-','AB+','AB-');
+			$this->load->view('admin/includes/header');
+			$this->load->view('admin/includes/nav');
+			$this->load->view('admin/doctor/view',$data);
+			$this->load->view('admin/includes/footer');
+		}
 	}
 	
 	
