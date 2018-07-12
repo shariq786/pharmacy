@@ -177,7 +177,14 @@
               </p>
             </a>
           </li>
-          
+            <li class="nav-item">
+            <a href="<?php echo base_url(); ?>Categories" class="nav-link <?php if($this->uri->segment(1) == 'Categories'){ echo 'active'; }; ?>">
+              <i class="nav-icon fa fa-building"></i>
+              <p>
+                Categories
+              </p>
+            </a>
+          </li>
         
         </ul>
       </nav>
