@@ -32,10 +32,19 @@ class AdminSubAdmin extends CI_Controller {
 	
 	public function subAdminListing()
 	{
-		$this->load->view('admin/includes/header');
-		$this->load->view('admin/includes/nav');
-		$this->load->view('admin/subadmin/view');
-		$this->load->view('admin/includes/footer');
+		$isLoggedIn = $this->session->userdata('isLoggedIn');
+        
+        if(!isset($isLoggedIn) || $isLoggedIn != TRUE)
+        {
+			     redirect('admin');
+        }
+        else
+        {
+			$this->load->view('admin/includes/header');
+			$this->load->view('admin/includes/nav');
+			$this->load->view('admin/subadmin/view');
+			$this->load->view('admin/includes/footer');
+		}
 	}
 	
 	
