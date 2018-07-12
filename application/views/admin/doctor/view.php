@@ -164,12 +164,12 @@
  
  
         <!-- MODAL EDIT -->
-        <form id="editdoctorform" enctype="multipart/form-data" accept-charset="utf-8" name="edit_formname" method="post" action="">
+        <form id="editdoctorform" enctype="multipart/form-data" accept-charset="utf-8" name="edit_formname" method="post" action="" onsubmit="return false;">
             <div class="modal fade" id="Modal_DoctorEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Edit Doctor Information</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Doctor Information<br/><span id="edit_error"></span</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>

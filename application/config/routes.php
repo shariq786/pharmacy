@@ -68,6 +68,7 @@ $route['Users'] 	 	 				 = 'admin/AdminUser/userListing';
 $route['Departments'] 	 	 				 = 'admin/AdminDepartment/departmentListing';
 $route['Doctors'] 	 	 				 = 'admin/AdminDoctor/doctorListing';
 $route['Labs'] 	 	 				 = 'admin/AdminLab/labListing';
+$route['Tests'] 	 	 				 = 'admin/AdminTest/testListing';
 
 
 

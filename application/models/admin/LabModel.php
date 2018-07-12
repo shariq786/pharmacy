@@ -16,6 +16,19 @@ class LabModel extends CI_Model
             return false;
         }
     }
+     function checkUpdateLabExist($name,$id)
+    {
+        $this->db->select('id');
+ 		$this->db->where('id !=', $id);
+        $this->db->where('name', $name);
+        $query = $this->db->get('labs');
+
+        if ($query->num_rows() > 0){
+            return true;
+        } else {
+            return false;
+        }
+    }
 	
 	function viewRecords()
     {
@@ -56,6 +69,10 @@ class LabModel extends CI_Model
 	
 	
 	function update_lab(){
+		$exists = $this->checkUpdateLabExist($this->input->post('name'),$this->input->post('id'));
+		if($exists){
+			return "name_exist";
+		}else{
 		$id  = $this->input->post('id'); 
 		$name  = $this->input->post('name'); 
 		$address  = $this->input->post('address'); 
@@ -69,6 +86,7 @@ class LabModel extends CI_Model
         $this->db->where('id', $id);
         $result=$this->db->update('labs');
         return $result;
+    	}
     }
 	
 	function delete_lab(){

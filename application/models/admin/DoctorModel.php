@@ -90,7 +90,7 @@ class DoctorModel extends CI_Model
 		$email  = $this->input->post('email_edit'); 
 		$exists = $this->checkDoctorUpdateExist($email,$id);
 		if($exists){
-			return "email_exist";
+		 echo TRUE;
 		}else{
 			
 			if(isset($_POST['avatar_edit']) && !empty($_POST['avatar_edit']) && $_POST['avatar_edit'] !="undefined" && $_POST['avatar_edit'] !=undefined){

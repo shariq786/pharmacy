@@ -598,7 +598,6 @@
                     
                   },
                 submitHandler: function(form) {
-
                        var formData = new FormData( $("#adddoctorform")[0]);
                        formData.append('avatar', $("#doctor_image")[0].files[0])
 
@@ -621,7 +620,6 @@
                                     $('[name="first_name"]').val("");
                                     $('[name="last_name"]').val("");
                                     $('[name="email"]').val("");
-                                    $('[name="department_id"]').val("");
                                     $('[name="address"]').val("");
                                     $('[name="contact"]').val("");
                                     $('[name="clinic_name"]').val("");
@@ -658,9 +656,13 @@
             $('[name="clinic_name_edit"]').val(clinic_name);
             $('[name="visit_fee_edit"]').val(visit_fee);
             $("#doctor_image_view").attr("src","<?php echo base_url();?>uploads/doctors/" +avatar);
+             $("#edit_error").empty();
             $('#Modal_DoctorEdit').modal('show');
 
         });
+
+
+      
           $('#editdoctorform').validate({
                 rules: {
                     first_name_edit: {
@@ -691,7 +693,6 @@
                     
                   },
                 submitHandler: function(form) {
-
                         var formData = new FormData( $("#editdoctorform")[0]);
                         formData.append('avatar_edit', $("#doctor_image_new")[0].files[0])
                         
@@ -704,13 +705,10 @@
                             contentType : false,
                             processData : false,
                             success : function(data) {
-                               if(data == 'email_exist'){
-                                    $("#error").html('<label class="error" >Email already exist!</label>');
-                                }
-                                else if(data == 'false'){
-                                    $("#error").html('<label class="error" >Error in adding!</label>');
-                                } else {
-                                    $("#error").empty();
+                            console.log(data)         
+                                    if(data !='1null')
+                                    {
+                                    $("#edit_error").empty();
                                     $('[name="id_edit"]').val("");
                                     $('[name="first_name_edit"]').val("");
                                     $('[name="last_name_edit"]').val("");
@@ -723,10 +721,16 @@
                                     $('[name="avatar_edit"]').val("");
                                     $('#Modal_DoctorEdit').modal('hide');
                                     show_doctors();
+                                     return false;
+                                  
+                                } else {
+                                      $("#edit_error").html('<label class="error" >Error in editing! Check email is not exist or something</label>');
+                                      // $('#Modal_DoctorEdit').modal('show');
+                                     return false;
                                 }
                             }
                         });         
-                    return false;
+                   
                 },
                 // other options
             });
@@ -755,7 +759,7 @@
             return false;
         });
 
-                show_labs();
+                 show_labs();
                  function show_labs(){
                     $.ajax({
                         type  : 'ajax',
@@ -856,6 +860,7 @@
             $('[name="address_edit"]').val(address);
             $('[name="contact_edit"]').val(contact);
             $('[name="sec_contact_edit"]').val(sec_contact);
+            $("#edit_error").empty();
             $('#Modal_LabEdit').modal('show');
 
         });
@@ -873,8 +878,16 @@
                 dataType : "JSON",
                 data : {name:name , address:address, contact:contact,sec_contact:sec_contact,id:id},
                 success: function(data){
-                    $('#Modal_LabEdit').modal('hide');
-                    show_labs();
+                     if(data == 'name_exist'){
+                        $("#edit_error").html('<label class="error" >Lab name already exist!</label>');
+                    }
+                    else if(data == 'false'){
+                        $("#edit_error").html('<label class="error" >Error in adding!</label>');
+                    } else {
+                       $("#edit_error").empty();
+                       $('#Modal_LabEdit').modal('hide');
+                        show_labs();
+                    }
                 }
             });
             return false;
@@ -900,6 +913,152 @@
                             $('[name="id"]').val("");
                             $('#Modal_LabDelete').modal('hide');
                             show_labs();
+                        }
+                    });
+            return false;
+        });
+
+         show_tests();
+         function show_tests(){
+            $.ajax({
+                type  : 'ajax',
+                url   : '<?php echo base_url('admin/AdminTest/getTestData')?>',
+                async : false,
+                dataType : 'json',
+                success : function(data){
+                    var html = '';
+                    var i;
+                    for(i=0; i<data.length; i++){
+                        html += '<tr>'+
+                                '<td>'+data[i].name+'</td>'+
+                                '<td>'+data[i].lab_name+'</td>'+
+                                '<td>'+data[i].price+'</td>'+
+                                '<td style="text-align:right;">'+
+                                    '<a href="javascript:void(0);" class="btn btn-info btn-sm item_edit" data-id="'+data[i].id+'" data-name="'+data[i].name+'" data-lab_id="'+data[i].lab_id+'" data-price="'+data[i].price+'" >Edit</a>'+' '+
+                                    '<a href="javascript:void(0);" class="btn btn-danger btn-sm item_delete" data-id="'+data[i].id+'">Delete</a>'+
+                                '</td>'+
+                                '</tr>';
+                    }
+                    $("#mydata").dataTable().fnDestroy();
+                    $('#show_testdata').html(html);
+                    $("#mydata").dataTable();
+                   
+                }
+ 
+            });
+        }
+
+          $('#addtestform').validate({
+                rules: {
+                    name: {
+                      required: true
+                    },
+                    lab_id: {
+                      required: true
+                    },
+                    price: {
+                      required: true
+                    }
+                    
+                  },
+                submitHandler: function(form) {
+                    var name = $('[name="name"]').val();
+                    var lab_id = $('[name="lab_id"]').val();
+                    var price = $('[name="price"]').val();
+                    $.ajax({
+                        type : "POST",
+                        url  : "<?php echo base_url('admin/AdminTest/save_test')?>",
+                        dataType : "JSON",
+                        data : {name:name , lab_id:lab_id, price:price},
+                        success: function(data){
+                            if(data == 'name_exist'){
+                                $("#error").html('<label class="error" >Test name already exist!</label>');
+                            }
+                            else if(data == 'false'){
+                                $("#error").html('<label class="error" >Error in adding!</label>');
+                            } else {
+                                $("#error").empty();
+                                $('[name="name"]').val("");
+                                $('[name="price"]').val("");
+                                $('#Modal_TestAdd').modal('hide');
+                                show_tests();
+                            }
+                        }
+                    });
+                    return false;
+                },
+                // other options
+            });
+            
+            
+            
+            
+       // });
+ 
+        //get data for update record
+        $('#show_testdata').on('click','.item_edit',function(){
+            
+            var id      = $(this).data('id');
+            var name      = $(this).data('name');
+            var lab_id      = $(this).data('lab_id');
+            var price      = $(this).data('price');
+          
+            $('[name="id_edit"]').val(id);
+            $('[name="name_edit"]').val(name);
+            $('[name="lab_id_edit"]').val(lab_id);
+            $('[name="price_edit"]').val(price);
+            $("#edit_error").empty();
+            $('#Modal_TestEdit').modal('show');
+
+        });
+ 
+        //update record to database
+         $('#btn_testupdate').on('click',function(){
+            var id_edit  = $('[name="id_edit"]').val();
+            var name_edit = $('[name="name_edit"]').val();
+            var lab_id_edit = $('[name="lab_id_edit"]').val();
+            var price_edit = $('[name="price_edit"]').val();
+            $.ajax({
+                type : "POST",
+                url  : "<?php echo base_url('admin/AdminTest/update_test')?>",
+                dataType : "JSON",
+                data : {name_edit:name_edit , lab_id_edit:lab_id_edit, price_edit:price_edit,id_edit:id_edit},
+                success: function(data){
+                    if(data == 'name_exist'){
+                        $("#edit_error").html('<label class="error" >Test name already exist!</label>');
+                    }
+                    else if(data == 'false'){
+                        $("#edit_error").html('<label class="error" >Error in adding!</label>');
+                    } else {
+                        $("#edit_error").empty();
+                       $('#Modal_TestEdit').modal('hide');
+                        show_tests();
+                    }
+                   
+                }
+            });
+            return false;
+        });
+ 
+        //get data for delete record
+        $('#show_testdata').on('click','.item_delete',function(){
+            var id = $(this).data('id');
+            $('[name="id"]').val(id);
+            $('#Modal_TestDelete').modal('show');
+        });
+ 
+        //delete record to database
+         $('#btn_testdelete').on('click',function(){
+                    var id = $('#id').val();
+                    $.ajax({
+                        type : "POST",
+                        url  : "<?php echo base_url('admin/AdminTest/delete_test')?>",
+                        dataType : "JSON",
+                        data : {id:id},
+                        success: function(data){
+                            $('[name="id"]').val("");
+                            $('#Modal_TestDelete').modal('hide');
+                            show_tests();
                         }
                     });
             return false;
