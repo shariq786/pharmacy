@@ -32,10 +32,19 @@ class AdminUser extends CI_Controller {
 	
 	public function userListing()
 	{
-		$this->load->view('admin/includes/header');
-		$this->load->view('admin/includes/nav');
-		$this->load->view('admin/user/view');
-		$this->load->view('admin/includes/footer');
+		$isLoggedIn = $this->session->userdata('isLoggedIn');
+        
+        if(!isset($isLoggedIn) || $isLoggedIn != TRUE)
+        {
+			     redirect('admin');
+        }
+        else
+        {
+			$this->load->view('admin/includes/header');
+			$this->load->view('admin/includes/nav');
+			$this->load->view('admin/user/view');
+			$this->load->view('admin/includes/footer');
+		}
 	}
 	
 	
