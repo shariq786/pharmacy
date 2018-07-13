@@ -103,7 +103,7 @@ $route['user/createPasswordUser'] 					 = "user/UserLogin/createPasswordUser";.
 
 // extra 
 
-$route['user/dsad'] 					 = "user/UserLogin/dsad";
+$route['user/dsad'] 					 = "user/UserLogin/dsad34";
 
 $route['user/newRoute'] 					 = "user/UserLogin/newRoute";
 
